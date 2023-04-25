@@ -25,4 +25,10 @@ describe('Teste a função fetchProductsList', () => {
     
     expect(retorno).toEqual(computadorSearch);
   });
+
+  it('Teste o error da função', async () => {
+
+    expect(() => { fetchProductsList() }).toThrow();
+
+  });
 });
