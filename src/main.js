@@ -58,16 +58,16 @@ for (let index = 0; index < allProducts.length; index += 1) {
   });
 }
 // add ids na tela
-// const idsCart = JSON.parse(localStorage.getItem('cartProducts'));
-// if (idsCart !== null) {
-//   for (let index = 0; index < idsCart.length; index += 1) {
-//     fetchProduct(idsCart[index])
-//       .then((product) => createCartProductElement(product))
-//       .then((productCart) => document.querySelector('.cart__products')
-//         .appendChild(productCart))
-//       .catch((error) => console.log('Erro ao fazer requisição.', error.message));
-//   }
-// }
+const idsCart = JSON.parse(localStorage.getItem('cartProducts'));
+if (idsCart !== null) {
+  for (let index = 0; index < idsCart.length; index += 1) {
+    fetchProduct(idsCart[index])
+      .then((product) => createCartProductElement(product))
+      .then((productCart) => document.querySelector('.cart__products')
+        .appendChild(productCart))
+      .catch((error) => console.log('Erro ao fazer requisição.', error.message));
+  }
+}
 
 // idsCart.forEach(async (e) => {
 //   const product = await fetchProduct(e);
