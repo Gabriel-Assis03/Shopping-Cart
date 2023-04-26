@@ -12,12 +12,10 @@ export const fetchProduct = async (id = null) => {
 };
 
 export const fetchProductsList = async (product = null) => {
-  // if (product !== null) {
-  //   const response = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${product}`);
-  //   const data = await response.json();
-  //   return data.results;
-  // }
-  // throw new Error('Termo de busca não informado');
+  // if (!product) throw new Error('Termo de busca não informado');
+  // const response = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${product}`);
+  // const data = await response.json();
+  // return data.results;
   try {
     if (product !== null) {
       const response = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${product}`);

@@ -2,12 +2,12 @@ import { searchCep } from './helpers/cepFunctions';
 import './style.css';
 import { createProductElement } from './helpers/shopFunctions';
 import { fetchProductsList } from './helpers/fetchFunctions';
+import { saveCartID } from './helpers/cartFunctions';
 
 document.querySelector('.cep-button').addEventListener('click', searchCep);
 
 // add os produtos na tela
 const list = await fetchProductsList('computador');
-console.log(list);
 try {
   if (list !== undefined && list.length !== 0) {
     list.forEach(async (e) => {
@@ -27,3 +27,14 @@ try {
 // remove o 'caregando...' da tela
 const load = document.querySelector('.loading');
 load.parentNode.removeChild(load);
+
+// add produtos ao carrinho
+// saveCartID('MLB1405519561');
+localStorage.clear();
+const allProducts = await document.getElementsByClassName('product');
+console.log(allProducts.length);
+for (let index = 0; index < allProducts.length; index += 1) {
+  const filho = allProducts[index].childNodes;
+  console.log(filho[4]);
+  filho[4].addEventListener('click', saveCartID('oi'));
+}
