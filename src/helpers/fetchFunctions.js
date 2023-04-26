@@ -16,6 +16,7 @@ export const fetchProductsList = async (product = null) => {
   // const response = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${product}`);
   // const data = await response.json();
   // return data.results;
+
   try {
     if (product !== null) {
       const response = await fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${product}`);
@@ -26,4 +27,9 @@ export const fetchProductsList = async (product = null) => {
   } catch (error) {
     console.error(error);
   }
+
+  // const o = fetch(`https://api.mercadolibre.com/sites/MLB/search?q=${product}`)
+  //   .then((response) => response.json())
+  //   .then((data) => data.results);
+  //   .catch();
 };

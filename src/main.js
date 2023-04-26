@@ -1,7 +1,7 @@
 import { searchCep } from './helpers/cepFunctions';
 import './style.css';
-import { createProductElement } from './helpers/shopFunctions';
-import { fetchProductsList } from './helpers/fetchFunctions';
+import { createProductElement, createCartProductElement } from './helpers/shopFunctions';
+import { fetchProduct, fetchProductsList } from './helpers/fetchFunctions';
 import { saveCartID } from './helpers/cartFunctions';
 
 document.querySelector('.cep-button').addEventListener('click', searchCep);
@@ -30,11 +30,25 @@ load.parentNode.removeChild(load);
 
 // add produtos ao carrinho
 
-// localStorage.clear();
+// add id no localStorage
+// localStorage.clear(); // limpa o localStorage
 const allProducts = await document.getElementsByClassName('product');
 for (let index = 0; index < allProducts.length; index += 1) {
   const filho = allProducts[index].childNodes;
-  filho[4].addEventListener('click', () => {
-    saveCartID(filho[0].textContent);
-  });
+  filho[4].addEventListener('click', () => saveCartID(filho[0].textContent));
 }
+// add ids na tela
+const idsCart = JSON.parse(localStorage.getItem('cartProducts'));
+if (idsCart !== null) {
+  for (let index = 0; index < idsCart.length; index += 1) {
+    fetchProduct(idsCart[index])
+      .then((product) => createCartProductElement(product))
+      .then((productCart) => document.querySelector('.cart__products')
+        .appendChild(productCart));
+  }
+}
+// idsCart.forEach(async (e) => {
+//   const product = await fetchProduct(e);
+//   const productCart = await createCartElement(product);
+//   document.querySelector('.cart__products').appendChild(productCart);
+// });
