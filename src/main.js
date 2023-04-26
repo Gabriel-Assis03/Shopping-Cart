@@ -35,18 +35,40 @@ load.parentNode.removeChild(load);
 const allProducts = await document.getElementsByClassName('product');
 for (let index = 0; index < allProducts.length; index += 1) {
   const filho = allProducts[index].childNodes;
-  filho[4].addEventListener('click', () => saveCartID(filho[0].textContent));
+  filho[4].addEventListener('click', () => {
+    saveCartID(filho[0].textContent);
+
+    const ol = document.querySelector('.cart__products');
+    const li = document.querySelectorAll('.cart__product');
+    console.log(li);
+    if (li !== null) {
+      li.forEach((e) => ol.removeChild(e));
+    }
+
+    const idsCart = JSON.parse(localStorage.getItem('cartProducts'));
+    if (idsCart !== null) {
+      for (let index2 = 0; index2 < idsCart.length; index2 += 1) {
+        fetchProduct(idsCart[index2])
+          .then((product) => createCartProductElement(product))
+          .then((productCart) => document.querySelector('.cart__products')
+            .appendChild(productCart))
+          .catch((error) => console.log('Erro ao fazer requisição.', error.message));
+      }
+    }
+  });
 }
 // add ids na tela
-const idsCart = JSON.parse(localStorage.getItem('cartProducts'));
-if (idsCart !== null) {
-  for (let index = 0; index < idsCart.length; index += 1) {
-    fetchProduct(idsCart[index])
-      .then((product) => createCartProductElement(product))
-      .then((productCart) => document.querySelector('.cart__products')
-        .appendChild(productCart));
-  }
-}
+// const idsCart = JSON.parse(localStorage.getItem('cartProducts'));
+// if (idsCart !== null) {
+//   for (let index = 0; index < idsCart.length; index += 1) {
+//     fetchProduct(idsCart[index])
+//       .then((product) => createCartProductElement(product))
+//       .then((productCart) => document.querySelector('.cart__products')
+//         .appendChild(productCart))
+//       .catch((error) => console.log('Erro ao fazer requisição.', error.message));
+//   }
+// }
+
 // idsCart.forEach(async (e) => {
 //   const product = await fetchProduct(e);
 //   const productCart = await createCartElement(product);
