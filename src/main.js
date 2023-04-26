@@ -38,11 +38,11 @@ for (let index = 0; index < allProducts.length; index += 1) {
   filho[4].addEventListener('click', () => {
     saveCartID(filho[0].textContent);
 
-    const ol = document.querySelector('.cart__products');
+    const cartProducts = document.querySelector('.cart__products');
     const li = document.querySelectorAll('.cart__product');
     console.log(li);
     if (li !== null) {
-      li.forEach((e) => ol.removeChild(e));
+      li.forEach((e) => cartProducts.removeChild(e));
     }
 
     const idsCart = JSON.parse(localStorage.getItem('cartProducts'));
@@ -50,7 +50,7 @@ for (let index = 0; index < allProducts.length; index += 1) {
       for (let index2 = 0; index2 < idsCart.length; index2 += 1) {
         fetchProduct(idsCart[index2])
           .then((product) => createCartProductElement(product))
-          .then((productCart) => document.querySelector('.cart__products')
+          .then((productCart) => cartProducts
             .appendChild(productCart))
           .catch((error) => console.log('Erro ao fazer requisição.', error.message));
       }
