@@ -88,10 +88,9 @@ export const createCartProductElement = ({ id, title, price, pictures }) => {
   );
   li.appendChild(removeButton);
 
-  li.addEventListener('click', async () => {
+  li.addEventListener('click', () => {
     removeCartProduct(li, id);
     // altera o preco do carrinho
-    const { price } = await fetchProduct(id);
     console.log(price);
     let soma = localStorage.getItem('totalCart');
     soma -= price;

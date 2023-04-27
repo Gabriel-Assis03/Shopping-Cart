@@ -45,7 +45,7 @@ for (let index = 0; index < allProducts.length; index += 1) {
       li.forEach((e) => cartProducts.removeChild(e));
     }
     const totalPrice = document.querySelector('.total-price');
-    let soma = 0;
+    let soma = Number(localStorage.getItem('totalCart'));
     const idsCart = JSON.parse(localStorage.getItem('cartProducts'));
     if (idsCart !== null) {
       for (let index2 = 0; index2 < idsCart.length; index2 += 1) {
@@ -54,11 +54,12 @@ for (let index = 0; index < allProducts.length; index += 1) {
           .then((productCart) => cartProducts
             .appendChild(productCart))
           .catch((error) => console.log('Erro ao fazer requisição.', error.message));
-        const { price } = await fetchProduct(idsCart[index2]);
-        soma += price;
-        totalPrice.innerHTML = soma;
-        localStorage.setItem('totalCart', soma);
       }
+      const price = document.querySelectorAll('.product__price__value')[index];
+      console.log(price);
+      soma += Number(price.innerHTML);
+      totalPrice.innerHTML = soma;
+      localStorage.setItem('totalCart', soma);
     }
   });
 }
