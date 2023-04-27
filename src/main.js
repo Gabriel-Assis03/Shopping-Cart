@@ -33,18 +33,20 @@ load.parentNode.removeChild(load);
 // add id no localStorage
 // localStorage.clear(); // limpa o localStorage
 const allProducts = await document.getElementsByClassName('product');
+let deletBu = document.querySelectorAll('.cart__product__remove');
 for (let index = 0; index < allProducts.length; index += 1) {
   const filho = allProducts[index].childNodes;
-  filho[4].addEventListener('click', () => {
+  // eslint-disable-next-line no-loop-func
+  filho[4].addEventListener('click', async () => {
     saveCartID(filho[0].textContent);
-
+    // atualiza o carrinho
     const cartProducts = document.querySelector('.cart__products');
     const li = document.querySelectorAll('.cart__product');
-    console.log(li);
     if (li !== null) {
       li.forEach((e) => cartProducts.removeChild(e));
     }
-
+    const totalPrice = document.querySelector('.total-price');
+    let soma = 0;
     const idsCart = JSON.parse(localStorage.getItem('cartProducts'));
     if (idsCart !== null) {
       for (let index2 = 0; index2 < idsCart.length; index2 += 1) {
@@ -53,24 +55,56 @@ for (let index = 0; index < allProducts.length; index += 1) {
           .then((productCart) => cartProducts
             .appendChild(productCart))
           .catch((error) => console.log('Erro ao fazer requisição.', error.message));
+        const { price } = await fetchProduct(idsCart[index2]);
+        soma += price;
+        totalPrice.innerHTML = soma;
+        deletBu = document.querySelectorAll('.cart__product__remove');
+        // eslint-disable-next-line no-loop-func
+        deletBu.forEach((e) => {
+          e.addEventListener('click', async () => {
+            console.log('oi');
+            const { price } = await fetchProduct(idsCart[index2]);
+            soma -= price;
+            totalPrice.innerHTML = soma;
+          });
+        });
       }
     }
+    deletBu = document.querySelectorAll('.cart__product__remove');
+    deletBu.forEach((e) => {
+      e.addEventListener('click', async () => {
+        console.log('oi');
+        const { price } = await fetchProduct(idsCart[index2]);
+        soma -= price;
+        totalPrice.innerHTML = soma;
+      });
+    });
   });
 }
-// add ids na tela
 const idsCart = JSON.parse(localStorage.getItem('cartProducts'));
+const totalPrice = document.querySelector('.total-price');
+
+let soma = 0;
 if (idsCart !== null) {
   for (let index = 0; index < idsCart.length; index += 1) {
+    // add itens no carrinho ao carregar a tela
     fetchProduct(idsCart[index])
       .then((product) => createCartProductElement(product))
       .then((productCart) => document.querySelector('.cart__products')
         .appendChild(productCart))
       .catch((error) => console.log('Erro ao fazer requisição.', error.message));
+    const { price } = await fetchProduct(idsCart[index]);
+    soma += price;
+    totalPrice.innerHTML = soma;
   }
 }
-
-// idsCart.forEach(async (e) => {
-//   const product = await fetchProduct(e);
-//   const productCart = await createCartElement(product);
-//   document.querySelector('.cart__products').appendChild(productCart);
-// });
+deletBu = document.querySelectorAll('.cart__product__remove');
+// atualizar o valor ao excluir um item do carrinho
+// const deletBu = document.querySelectorAll('.cart__product__remove');
+// console.log(deletBu);
+console.log(deletBu);
+deletBu.forEach((e) => {
+  e.addEventListener('click', () => {
+    console.log('oi ');
+  });
+});
