@@ -26,9 +26,9 @@ describe('Teste a função fetchProduct', () => {
     expect(retorno).toEqual(product);
   });
 
-  // it('Teste o error da função', async () => {
+  it('Teste o error da função', async () => {
 
-  //   expect(fetchProduct()).toThrow();
+    expect(fetchProduct()).rejects.toBe('Termo de busca não informado');
 
-  // });
+  });
 });
