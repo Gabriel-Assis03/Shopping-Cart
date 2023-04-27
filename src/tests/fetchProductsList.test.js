@@ -28,7 +28,7 @@ describe('Teste a função fetchProductsList', () => {
 
   it('Teste o error da função', async () => {
 
-    expect(fetchProductsList()).rejects();
+    expect(fetchProductsList()).rejects.toEqual(new Error('Termo de busca não informado'));
 
   });
 });

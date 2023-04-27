@@ -7,20 +7,16 @@ import { saveCartID } from './helpers/cartFunctions';
 document.querySelector('.cep-button').addEventListener('click', searchCep);
 
 // add os produtos na tela
-const list = await fetchProductsList('computador');
 try {
-  if (list !== undefined && list.length !== 0) {
-    list.forEach(async (e) => {
-      const product = await createProductElement(e);
-      document.querySelector('.products').appendChild(product);
-    });
-  } else {
-    throw new Error('Algum erro ocorreu, recarregue a página e tente novamente');
-  }
+  const list = await fetchProductsList('computador');
+  list.forEach(async (e) => {
+    const product = await createProductElement(e);
+    document.querySelector('.products').appendChild(product);
+  });
 } catch (error) {
   console.error(error);
   const h2 = document.createElement('h2');
-  h2.innerHTML = error.message;
+  h2.innerHTML = 'Algum erro ocorreu, recarregue a página e tente novamente';
   h2.className = 'error';
   document.querySelector('.products').appendChild(h2);
 }

@@ -25,10 +25,10 @@ describe('Teste a função fetchProduct', () => {
     
     expect(retorno).toEqual(product);
   });
-
+  
   it('Teste o error da função', async () => {
 
-    expect(fetchProduct()).rejects.toBe('Termo de busca não informado');
+    expect(fetchProduct()).rejects.toEqual(new Error('ID não informado'));
 
   });
 });
